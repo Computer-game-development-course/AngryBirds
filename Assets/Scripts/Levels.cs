@@ -3,14 +3,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-public class Levels: MonoBehaviour {
-    public void retryLevel() {
+public class Levels : MonoBehaviour
+{
+    public void retryLevel()
+    {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex); 
+        SceneManager.LoadScene(currentSceneIndex);
     }
 
-    public void nextLevel() {
+    public void nextLevel()
+    {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex + 1); 
+        SceneManager.LoadScene(currentSceneIndex + 1);
     }
 }
