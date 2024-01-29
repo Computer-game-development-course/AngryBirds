@@ -5,6 +5,7 @@ using UnityEngine;
 public class PigEnemy : MonoBehaviour
 {
     private Rigidbody2D pigRigidbody;
+    [SerializeField] GameObject nextLevelUI = null; 
 
     void Start()
     {
@@ -19,9 +20,16 @@ public class PigEnemy : MonoBehaviour
             {
                 if(collision.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude >= 1)
                 {
+                     nextLevelUI.SetActive(true);
                      Destroy(gameObject);
                 }
             }
+
+        if(collision.gameObject.tag == "Wall")
+        {
+            nextLevelUI.SetActive(true);
+            Destroy(gameObject);
+        }
     }
    
 }

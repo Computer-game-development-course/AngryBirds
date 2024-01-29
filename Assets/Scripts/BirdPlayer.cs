@@ -5,11 +5,16 @@ using UnityEngine;
 public class BirdPlayer : MonoBehaviour
 {
     [SerializeField] float maxDragDistance = 5f;
+    [SerializeField] GameObject nextLevelUI = null; 
+    [SerializeField] GameObject reloadLevelUI = null;
     public Transform SlingshotLeft, SlingshotRight;
     private bool isDragging = false;
+    private bool isThrown = false;
+    private bool isCollided = false;
+    private bool hitPig = false;
     private Rigidbody2D birdRigidbody;
     private SpringJoint2D springJoint;
-    private Vector2 SlingshotMiddleVector;
+    private Vector2 SlingshotMiddleVector;   
 
     void Start()
     {
@@ -32,11 +37,23 @@ public class BirdPlayer : MonoBehaviour
         }
     }
 
-    private void OnMouseDown() {
+    private void FixedUpdate()
+    {
+
+        if (isThrown && isCollided && !hitPig && !nextLevelUI.activeSelf && birdRigidbody.velocity.magnitude < 0.1f)
+        {
+            reloadLevelUI.SetActive(true);
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnMouseDown() 
+    {
         isDragging = true;
     }
 
-    private void OnMouseUp() {
+    private void OnMouseUp() 
+    {
         isDragging = false;
         birdRigidbody.isKinematic = false;
         springJoint.enabled = false;
@@ -44,6 +61,36 @@ public class BirdPlayer : MonoBehaviour
         // Calculate the direction from the bird to the slingshot and apply force in that direction.
         Vector2 forceDirection = SlingshotMiddleVector - birdRigidbody.position;
         birdRigidbody.AddForce(forceDirection * 200f);
+
+        isThrown = true;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(isThrown) 
+        {
+            if(collision.gameObject.tag == "Enemy")
+            {
+                nextLevelUI.SetActive(true);
+                hitPig = true;
+            }
+            else if(collision.gameObject.tag == "Brick" || collision.gameObject.tag == "Ground")
+            {
+                // Check if the bird has stopped moving.
+                if (birdRigidbody.velocity.magnitude < 0.1f && !nextLevelUI.activeSelf)
+                {
+                    reloadLevelUI.SetActive(true);
+                }
+            }
+            isCollided = true;
+        }
+
+        if(collision.gameObject.tag == "Wall")
+        {
+            reloadLevelUI.SetActive(true);
+            Destroy(gameObject);
+        }
+        
     }
 }
 
