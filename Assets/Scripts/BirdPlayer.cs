@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BirdPlayer : MonoBehaviour 
+public class BirdPlayer : MonoBehaviour
 {
     [SerializeField] float maxDragDistance = 5f;
     [SerializeField] GameObject nextLevelUI = null;
@@ -72,12 +72,12 @@ public class BirdPlayer : MonoBehaviour
     {
         if (isThrown)
         {
-            if(collision.gameObject.tag == "Enemy")
+            if (collision.gameObject.tag == "Enemy")
             {
                 nextLevelUI.SetActive(true);
                 hitPig = true;
             }
-            else if(collision.gameObject.tag == "Brick" || collision.gameObject.tag == "Ground")
+            else if (collision.gameObject.tag == "Brick" || collision.gameObject.tag == "Ground")
             {
                 // Check if the bird has stopped moving.
                 if (birdRigidbody.velocity.magnitude < 0.1f && !nextLevelUI.activeSelf)

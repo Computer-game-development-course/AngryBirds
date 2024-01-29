@@ -21,7 +21,7 @@ public class PigEnemy : MonoBehaviour
 
         else if (collision.gameObject.tag == "Brick")
         {
-            if(collision.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude >= 1)
+            if (collision.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude >= 1)
             {
                 nextLevelUI.SetActive(true);
                 Destroy(gameObject);
