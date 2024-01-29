@@ -1,6 +1,7 @@
 # Angry Birds 3 Levels
 
 The game was built as part of an assignment in a computer game development course.
+- [Click here to play on itch.io](https://alinaandyuval.itch.io/angrybirds)
 
 ## Levels
 
